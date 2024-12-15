@@ -16,5 +16,4 @@ public class SalaryCreateRequestDto {
     private int salary;
     private List<SalaryUsageInfoCreateRequestDto> salaryUsageInfos;
 
-
 }
