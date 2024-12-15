@@ -2,7 +2,11 @@ package com.judy.smartsalarylife.salary.domain;
 
 import com.judy.smartsalarylife.common.entity.BaseEntity;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 public class SalaryUsageInfo extends BaseEntity {
 
