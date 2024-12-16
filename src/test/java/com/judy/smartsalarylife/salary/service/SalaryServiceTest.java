@@ -32,7 +32,7 @@ class SalaryServiceTest {
     @Test
     @DisplayName("월급 생성")
     void createSalary() {
-        SalaryUsageInfoCreateRequestDto usageInfo = SalaryUsageInfoCreateRequestDto.builder().content("저축").amount(1_000_000).build();
+        SalaryUsageInfoCreateRequestDto usageInfo = SalaryUsageInfoCreateRequestDto.builder().name("저축").amount(1_000_000).build();
         List<SalaryUsageInfoCreateRequestDto> usageInfosList = List.of(usageInfo);
         SalaryCreateRequestDto requestDto = SalaryCreateRequestDto.builder().salaryDate(LocalDate.now()).salary(1_000_000).salaryUsageInfos(usageInfosList).build();
 
@@ -42,14 +42,14 @@ class SalaryServiceTest {
         assertEquals(1, salaries.size());
         assertEquals(requestDto.getSalaryDate(), salaries.get(0).getSalaryDate());
         assertEquals(requestDto.getSalary(), salaries.get(0).getSalary());
-        assertEquals(usageInfo.getContent(), salaries.get(0).getSalaryUsageInfos().get(0).getContent());
+        assertEquals(usageInfo.getName(), salaries.get(0).getSalaryUsageInfos().get(0).getContent());
         assertEquals(usageInfo.getAmount(), salaries.get(0).getSalaryUsageInfos().get(0).getAmount());
     }
 
     @Test
     @DisplayName("월급사용정보의 합이 월급과 일치하지 않음")
     void notEqualsSalaryToSumOfSalaryUsagesInfos() {
-        SalaryUsageInfoCreateRequestDto usageInfo = SalaryUsageInfoCreateRequestDto.builder().content("저축").amount(1_000_001).build();
+        SalaryUsageInfoCreateRequestDto usageInfo = SalaryUsageInfoCreateRequestDto.builder().name("저축").amount(1_000_001).build();
         List<SalaryUsageInfoCreateRequestDto> usageInfosList = List.of(usageInfo);
         SalaryCreateRequestDto requestDto = SalaryCreateRequestDto.builder().salaryDate(LocalDate.now()).salary(1_000_000).salaryUsageInfos(usageInfosList).build();
 
@@ -60,7 +60,7 @@ class SalaryServiceTest {
     @Test
     @DisplayName("미래 월급 입력 불가능")
     void futureSalaryDate() {
-        SalaryUsageInfoCreateRequestDto usageInfo = SalaryUsageInfoCreateRequestDto.builder().content("저축").amount(1_000_001).build();
+        SalaryUsageInfoCreateRequestDto usageInfo = SalaryUsageInfoCreateRequestDto.builder().name("저축").amount(1_000_001).build();
         List<SalaryUsageInfoCreateRequestDto> usageInfosList = List.of(usageInfo);
         SalaryCreateRequestDto requestDto = SalaryCreateRequestDto.builder().salaryDate(LocalDate.of(2099, 1, 1)).salary(1_000_000).salaryUsageInfos(usageInfosList).build();
 
@@ -71,7 +71,7 @@ class SalaryServiceTest {
     @Test
     @DisplayName("월급 사용 정보 입력 길이 초과")
     void invalidLengthSalaryUsageInfos() {
-        SalaryUsageInfoCreateRequestDto usageInfo = SalaryUsageInfoCreateRequestDto.builder().content("저축").amount(10_000).build();
+        SalaryUsageInfoCreateRequestDto usageInfo = SalaryUsageInfoCreateRequestDto.builder().name("저축").amount(10_000).build();
         List<SalaryUsageInfoCreateRequestDto> usageInfosList = new ArrayList<>();
         for (int i = 0; i < 101; i++) {
             usageInfosList.add(usageInfo);
