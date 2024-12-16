@@ -1,7 +1,9 @@
 package com.judy.smartsalarylife.member.controller;
 
 import com.judy.smartsalarylife.member.request.MemberJoinRequestDto;
+import com.judy.smartsalarylife.member.request.MemberLoginRequestDto;
 import com.judy.smartsalarylife.member.response.MemberJoinResponseDto;
+import com.judy.smartsalarylife.member.response.MemberLoginResponseDto;
 import com.judy.smartsalarylife.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,11 @@ public class MemberController {
     @PostMapping("/members")
     public ResponseEntity<MemberJoinResponseDto> join(@RequestBody @Valid MemberJoinRequestDto memberJoinRequestDto) {
         return this.memberService.join(memberJoinRequestDto);
+    }
+
+    @PostMapping("/members/login")
+    public ResponseEntity<MemberLoginResponseDto> login(@RequestBody @Valid MemberLoginRequestDto memberLoginRequestDto) {
+        return this.memberService.login(memberLoginRequestDto);
     }
 
 }
