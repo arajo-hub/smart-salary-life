@@ -11,7 +11,7 @@ import com.judy.smartsalarylife.member.response.MemberLoginResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -22,9 +22,13 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final ModelMapper modelMapper;
-    private final BCryptPasswordEncoder encoder;
+    private final PasswordEncoder encoder;
 
     public ResponseEntity<MemberJoinResponseDto> join(MemberJoinRequestDto memberJoinRequestDto) {
+        Optional<Member> memberByEmail = this.memberRepository.findByEmail(memberJoinRequestDto.getEmail());
+        if (memberByEmail.isPresent()) {
+            throw new SmartSalaryLifeException(ErrorCode.INVALID_EMAIL);
+        }
         Member member = modelMapper.map(memberJoinRequestDto, Member.class);
         member.setEncryptedPassword(encoder.encode(memberJoinRequestDto.getPassword()));
         this.memberRepository.save(member);

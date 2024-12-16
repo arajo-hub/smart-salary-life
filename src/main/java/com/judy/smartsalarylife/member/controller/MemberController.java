@@ -18,12 +18,12 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @PostMapping("/members")
+    @PostMapping(value = "/members", produces = "application/json")
     public ResponseEntity<MemberJoinResponseDto> join(@RequestBody @Valid MemberJoinRequestDto memberJoinRequestDto) {
         return this.memberService.join(memberJoinRequestDto);
     }
 
-    @PostMapping("/members/login")
+    @PostMapping(value = "/members/login", produces = "application/json")
     public ResponseEntity<MemberLoginResponseDto> login(@RequestBody @Valid MemberLoginRequestDto memberLoginRequestDto) {
         return this.memberService.login(memberLoginRequestDto);
     }
